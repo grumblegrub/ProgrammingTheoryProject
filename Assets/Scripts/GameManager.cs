@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }  //Encapsulation
 
-    public string playerName;
+    [System.NonSerialized]
+    public string playerName="Anon";
 
     private void Awake()
     {

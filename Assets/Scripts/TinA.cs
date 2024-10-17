@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TinA : Tin
 {
-    public override void TinIngredients()
+    public override void TinIngredients() //Polymorphism
     {
         ingredient1 = "Chicken";
         ingredient2 = "Cheese";

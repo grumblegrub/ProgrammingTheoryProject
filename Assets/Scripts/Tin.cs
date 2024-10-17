@@ -14,13 +14,13 @@ public class Tin : MonoBehaviour
 
     }
     
-    public virtual void TinIngredients()
+    public virtual void TinIngredients() //Polymorphism
     {
         ingredient1 = "Fish";
         ingredient2 = "Egg";
     }
 
-    public void OnMouseDown()
+    public void OnMouseDown()  //Inheritance
     {
         MainManager.Instance.selectedTin = this.name;
         MainManager.Instance.SwitchTin();

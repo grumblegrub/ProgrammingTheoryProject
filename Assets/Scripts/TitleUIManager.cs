@@ -9,9 +9,21 @@ public class TitleUIManager : MonoBehaviour
     public GameObject catNameInput;
     public Text subTitleText;
 
+
+    public Button startButton;
+    public Text warningText;
+    public bool nameCheck = true;
+
     public void Start()
     {
         GamePrompt();
+    }
+
+    public void Update()
+    {
+        NameCheck();
+
+
     }
 
 
@@ -36,5 +48,11 @@ public class TitleUIManager : MonoBehaviour
             { subTitleText.text = GameManager.Instance.catName + " is full. You Win!"; }
             else { subTitleText.text = GameManager.Instance.catName + " is mad. You Lose!"; }
         }
+    }
+
+    private void NameCheck()
+    {
+        warningText.enabled = !GameManager.Instance.nameOkay;
+        startButton.interactable = GameManager.Instance.nameOkay;
     }
 }

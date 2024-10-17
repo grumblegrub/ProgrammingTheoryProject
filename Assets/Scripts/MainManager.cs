@@ -41,22 +41,16 @@ public class MainManager : MonoBehaviour
 
     void Start()
     {
-        //temp delete later as will load from title
-        Instantiate(gameManager);
-
         SetupIngredients();
         catNameText.text = GameManager.Instance.catName+" is hungry!";
-        NewRound();
+
+
+        NewRound(); //Abstraction
     }
 
-    void Update()
+    public void FeedCat() //Abstraction
     {
-       
-    }
-
-    public void FeedCat()
-    {
-        UpdateScore();
+        UpdateScore();  
         DeselectTin();
         NewRound();
     }
@@ -80,9 +74,9 @@ public class MainManager : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    void NewRound()
+    void NewRound() //Abstraction
     {
-        NewRequest();
+        NewRequest(); 
         UpdateMainGUI();
         ReadTinIngredients();
     }
@@ -122,13 +116,17 @@ public class MainManager : MonoBehaviour
             currentTin = null;
         }
     }
+
     public void ReadTinIngredients()
     {
         if (currentTin != null)
         {
             selectedTinText.text = currentTin.ingredient1 + $"<br>" + currentTin.ingredient2;
+            feedTinButton.interactable = true;
         }
-        else { selectedTinText.text = "Select Tin"; }
+        else { selectedTinText.text = "Select Tin";
+            feedTinButton.interactable = false;
+        }
     }
 
 

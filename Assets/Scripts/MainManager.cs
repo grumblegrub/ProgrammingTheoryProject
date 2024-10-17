@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
@@ -15,7 +17,7 @@ public class MainManager : MonoBehaviour
     [System.NonSerialized] public string catRequest;
 
     // GUI Elements - assigned in inspector
-    public TextMeshProUGUI playerNameText;
+    public TextMeshProUGUI catNameText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI catRequestText;
@@ -30,14 +32,11 @@ public class MainManager : MonoBehaviour
     private GameObject currentTinObj =null;
     private Tin currentTin;
 
-   
-
 
     private void Awake()
     {
         Instance = this;
     }
-
 
 
     void Start()
@@ -46,32 +45,46 @@ public class MainManager : MonoBehaviour
         Instantiate(gameManager);
 
         SetupIngredients();
-        playerNameText.text = GameManager.Instance.playerName;
+        catNameText.text = GameManager.Instance.catName+" is hungry!";
         NewRound();
     }
 
     void Update()
     {
-
+       
     }
 
-    void FeedCat()
+    public void FeedCat()
     {
         UpdateScore();
+        DeselectTin();
         NewRound();
     }
 
     void UpdateScore()
     {
+        if(catRequest==currentTin.ingredient1|| catRequest == currentTin.ingredient2)
+        {
+            score += 100;
+            if (score == 1000) { GameOver(true); }
+        }
+        else { playerHealth--; if (playerHealth==0) { GameOver(false); } }
 
     }
    
+    void GameOver(bool win)
+    {
+        GameManager.Instance.firstGame = false;
+        GameManager.Instance.gameWon = win;
+
+        SceneManager.LoadScene(0);
+    }
 
     void NewRound()
     {
         NewRequest();
         UpdateMainGUI();
-       
+        ReadTinIngredients();
     }
 
 
@@ -90,23 +103,32 @@ public class MainManager : MonoBehaviour
 
     public void SwitchTin()
     {
-        if (currentTinObj != null)
-        {
-            currentTinObj.transform.Find("Outline").gameObject.SetActive(false);
-        }
+        DeselectTin();
+
         currentTinObj = GameObject.Find(selectedTin);
         currentTinObj.transform.Find("Outline").gameObject.SetActive(true);
-
         currentTin=currentTinObj.GetComponent<Tin>();
 
         ReadTinIngredients();
     }
 
+
+    private void DeselectTin()
+    {
+        if (currentTin != null)
+        {
+            currentTinObj.transform.Find("Outline").gameObject.SetActive(false);
+            currentTinObj = null;
+            currentTin = null;
+        }
+    }
     public void ReadTinIngredients()
     {
-
-        selectedTinText.text = currentTin.ingredient1+$"<br>"+ currentTin.ingredient2;
-
+        if (currentTin != null)
+        {
+            selectedTinText.text = currentTin.ingredient1 + $"<br>" + currentTin.ingredient2;
+        }
+        else { selectedTinText.text = "Select Tin"; }
     }
 
 

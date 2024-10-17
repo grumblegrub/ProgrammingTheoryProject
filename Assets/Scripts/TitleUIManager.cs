@@ -6,16 +6,35 @@ using UnityEngine.UI;
 
 public class TitleUIManager : MonoBehaviour
 {
-    public GameObject playerNameInput;
+    public GameObject catNameInput;
+    public Text subTitleText;
 
-    public void EnterPlayerName()
+    public void Start()
     {
-        GameManager.Instance.playerName= playerNameInput.GetComponent<InputField>().text;
+        GamePrompt();
+    }
+
+
+    public void EnterCatName()
+    {
+        GameManager.Instance.catName= catNameInput.GetComponent<InputField>().text;
 
     }
 
     public void StartNew()
     {
         SceneManager.LoadScene(1);
+    }
+
+    private void GamePrompt()
+    {
+        if (GameManager.Instance.firstGame)
+        { subTitleText.text = "OOP Theory Project"; }
+        else
+        {
+            if (GameManager.Instance.gameWon)
+            { subTitleText.text = GameManager.Instance.catName + " is full. You Win!"; }
+            else { subTitleText.text = GameManager.Instance.catName + " is mad. You Lose!"; }
+        }
     }
 }

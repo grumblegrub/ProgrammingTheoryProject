@@ -379,7 +379,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2041218587}
         m_TargetAssemblyTypeName: TitleUIManager, Assembly-CSharp
-        m_MethodName: EnterPlayerName
+        m_MethodName: EnterCatName
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1221,7 +1221,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter name...
+  m_Text: Name your cat...
 --- !u!222 &1779728033
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1259,7 +1259,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e5a12e514cc8724797ea50b7a7b49fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNameInput: {fileID: 468739861}
+  catNameInput: {fileID: 468739861}
+  subTitleText: {fileID: 876829950}
 --- !u!4 &2041218588
 Transform:
   m_ObjectHideFlags: 0

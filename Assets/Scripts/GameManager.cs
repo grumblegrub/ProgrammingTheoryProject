@@ -7,7 +7,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }  //Encapsulation
 
     [System.NonSerialized]
-    public string playerName="Anon";
+    public string catName="Garfield";
+    public bool firstGame = true;
+    public bool gameWon = true;
 
     private void Awake()
     {

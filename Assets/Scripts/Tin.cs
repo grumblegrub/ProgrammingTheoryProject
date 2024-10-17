@@ -1,20 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Tin : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [System.NonSerialized] public string ingredient1;
+    [System.NonSerialized] public string ingredient2;
+
     void Start()
     {
-        
+        TinIngredients();
+
+    }
+    
+    public virtual void TinIngredients()
+    {
+        ingredient1 = "Fish";
+        ingredient2 = "Egg";
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnMouseDown()
     {
-        
+        MainManager.Instance.selectedTin = this.name;
+        MainManager.Instance.SwitchTin();
+
     }
+
+
 
 
 }

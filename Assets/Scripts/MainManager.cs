@@ -6,22 +6,39 @@ using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
-    public int score;
-    public int playerHealth=3;
+    public static MainManager Instance { get; private set; }
 
+    [System.NonSerialized] public int score;
+    [System.NonSerialized] public int playerHealth=3;
 
-    public string[] ingredients=new string[6];
-    public string catRequest;
+    [System.NonSerialized] public string[] ingredients=new string[6];
+    [System.NonSerialized] public string catRequest;
 
     // GUI Elements - assigned in inspector
     public TextMeshProUGUI playerNameText;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI healthText;
     public TextMeshProUGUI catRequestText;
-    public TextMeshProUGUI selectedTin;
+
+    public TextMeshProUGUI selectedTinText;
     public Button feedTinButton;
 
     public GameObject gameManager;
+
+    //selected tin
+    [System.NonSerialized] public string selectedTin = null;
+    private GameObject currentTinObj =null;
+    private Tin currentTin;
+
+   
+
+
+    private void Awake()
+    {
+        Instance = this;
+    }
+
+
 
     void Start()
     {
@@ -35,7 +52,7 @@ public class MainManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     void FeedCat()
@@ -70,7 +87,31 @@ public class MainManager : MonoBehaviour
         catRequestText.text = catRequest;
     }
 
-    void SetupIngredients()
+
+    public void SwitchTin()
+    {
+        if (currentTinObj != null)
+        {
+            currentTinObj.transform.Find("Outline").gameObject.SetActive(false);
+        }
+        currentTinObj = GameObject.Find(selectedTin);
+        currentTinObj.transform.Find("Outline").gameObject.SetActive(true);
+
+        currentTin=currentTinObj.GetComponent<Tin>();
+
+        ReadTinIngredients();
+    }
+
+    public void ReadTinIngredients()
+    {
+
+        selectedTinText.text = currentTin.ingredient1+$"<br>"+ currentTin.ingredient2;
+
+    }
+
+
+
+    public void SetupIngredients()
     {
         ingredients =new string[6] {"Fish", "Chicken", "Beef", "Egg", "Cheese", "Carrot" };
 
